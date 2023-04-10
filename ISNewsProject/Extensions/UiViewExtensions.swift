@@ -19,3 +19,4 @@ extension UIView {
         self.layer.borderColor = color.cgColor
     }
 }
+// Rename avec un UI avec un I majuscule

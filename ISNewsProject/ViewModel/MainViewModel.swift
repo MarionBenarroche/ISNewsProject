@@ -31,16 +31,17 @@ class MainViewModel {
         // On démarre le chargement des données
         isLoading.value = true
         
-        APICaller.getLatestNews { [weak self] result in
+        Task {
+            var result = await APICaller.getLatestNews()
             // Les données on été téléchargées
-            self?.isLoading.value = false
+            self.isLoading.value = false
             
             // En fonction du résultat obtenue
             switch result {
             case .success(let data):
                 // On met à jour les dataSource
-                self?.dataSource = data
-                self?.mapCellData()
+                self.dataSource = data
+                self.mapCellData()
             case .failure(let error):
                 // Ou on affiche l'erreur
                 print(error)

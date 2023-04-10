@@ -28,3 +28,5 @@ class Observable<T> {
         self.listener = listener
     }
 }
+
+// TODO Use la librairie combine à la place

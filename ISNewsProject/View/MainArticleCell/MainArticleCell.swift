@@ -9,11 +9,7 @@ import UIKit
 
 class MainArticleCell: UITableViewCell {
     
-    public static var identifier: String {
-        get {
-            return "MainArticleCell"
-        }
-    }
+    public static var identifier: String = "MainArticleCell"
     
     public static func register() -> UINib {
         UINib(nibName: "MainArticleCell", bundle: nil)
