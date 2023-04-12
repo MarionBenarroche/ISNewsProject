@@ -7,47 +7,47 @@
 
 import Foundation
 
-// Structure du retour de l'API
+// Struc of the API return's data
 struct LatestNewsModel: Codable {
-    // Statut de la demande ('ok' ou 'error')
+    // Statut of the request ('ok' or 'error')
     let status: String?
-    // Nombre d'article trouvés
+    // Number of article found
     let totalResults: Int
-    // Liste des articles trouvés
+    // List of the article dound
     let articles: [Article]
     
-    // Seulement en cas de status 'error'
-    // Code de l'erreur retournée par l'API
+    // Only if statut equals 'error'
+    // Error code return by the API
     let code: String?
-    // Message d'explication de l'erreur
+    // Exclpication of the error
     let message: String?
 }
 
-// Structure d'un article
+// Struc of an article
 struct Article: Codable {
-    // Source de l'article
+    // Source of the article
     let source: Source
-    // Titre de l'article
+    // Title of the article
     let title: String
-    // URL de l'article sur le site d'ou il provient
+    // URL where the article came from
     let url: String
-    // Date de publication en UTC +0
+    // Date of publication in UTC+0
     let publishedAt: String
     
-    // Auteur de l'article
+    // Author of the article
     let author: String?
-    // Description ou résumé de l'article
+    // Resume of the article
     let description: String?
-    // URL de l'image de l'article
+    // URL of the image of the article
     let urlToImage: String?
-    // Contenu de l'article non formaté, tronqué à 200 caractères
+    // Content of ther article non formated, truncated at 200 caracteres
     let content: String?
 }
 
-// Structure de la source d'un Article
+// Struc of the source of the Article
 struct Source: Codable {
-    // Identifiant de la source
+    // ID of the source
     let id: String?
-    // Nom de la source
+    // Name of the source
     let name: String
 }

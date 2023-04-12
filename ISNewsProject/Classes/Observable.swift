@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Listener to check if the value of something change
 class Observable<T> {
     
     var value: T? {
@@ -28,5 +29,3 @@ class Observable<T> {
         self.listener = listener
     }
 }
-
-// TODO Use la librairie combine à la place

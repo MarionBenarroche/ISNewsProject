@@ -10,7 +10,6 @@ import UIKit
 class MainViewController: UIViewController {
 
     // IBoutlets
-    // Liste des articles 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -22,8 +21,7 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // On configure la vue principal
+       
         configView()
         bindViewModel()
     }
@@ -33,19 +31,16 @@ class MainViewController: UIViewController {
         viewModel.getData()
     }
     
-    
-    // Configuration de la vue principal
-    func configView() {
-        // Modification de la vue principal
-        self.title = "IS News Project"
-        self.view.backgroundColor = .systemBlue
-        
-        // Configuration des TableView
-        setupTableView()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         viewModel.getData()
+    }
+    
+    // Configuration of the principal view
+    func configView() {
+        self.title = "IS News Project"
+        
+        // Setup of the TableView of the Article
+        setupTableView()
     }
     
     func bindViewModel() {
@@ -53,6 +48,7 @@ class MainViewController: UIViewController {
             guard let self = self, let isLoading = isLoading else {
                 return
             }
+            // Show an activity indicator when we load the data
             DispatchQueue.main.async {
                 if isLoading {
                     self.activityIndicator.startAnimating()
@@ -71,13 +67,18 @@ class MainViewController: UIViewController {
         }
     }
     
+    // Open the view of an Article
     func openArticle(articleTitle: String) {
+        // Retrieve the Article with it name
         guard let article = viewModel.retriveArticle(with: articleTitle) else {
             return
         }
         
+        // Construction of the view and the controller
         let articleViewModel = ArticleViewModel(article: article)
         let articleController = ArticleViewController(viewModel: articleViewModel)
+        
+        // And push the new view with an animation
         DispatchQueue.main.async {
             self.navigationController?.pushViewController(articleController, animated: true)
         }

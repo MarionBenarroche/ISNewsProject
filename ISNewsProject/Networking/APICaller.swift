@@ -8,53 +8,53 @@
 import Foundation
 import SwiftUI
 
-// Gestion customisée des erreur
+// Custom error management
 enum NetworkError: Error {
     case urlError
     case canNotParseData
-    case noAPIKey
 }
 
 public class APICaller {
     
-    // Récupération des dernières news en Français
-    static func getLatestNews() async -> Result<LatestNewsModel, NetworkError> {
-        // D'abord on vérifie que l'on a bien une clef et une adresse d'API définit dans les constante
+    // Get all latest French news
+    static func getLatestNews(
+        completionHandler: @escaping (_ result: Result<LatestNewsModel, NetworkError>) -> Void
+    ) {
+        // First we check that we have an API key and URL in the constant file
         if NetworkConstants.shared.apiKey.isEmpty, NetworkConstants.shared.serverAddress.isEmpty {
-            print("Clef de l'API ou adresse de l'API manquant")
-            // Si on a pas ces deux informations, on ne peut rien faire
-            return .failure(.noAPIKey)
+            // If something is missing, we can't do anything
+            print("API key or URL missing")
+            return
         }
         
-        // On construit un string avec l'URL que l'on va utiliser qui contient l'adresse de l'API, les options que l'on veut et la clef de l'API
+        // We build the API URL that we are going to use with the API adress, options that we want and API key
         let urlString = NetworkConstants.shared.serverAddress
-        // Ici on ne veut que les titres des articles en Français
+        // We only want the latests French article
         + "top-headlines?country=fr&apiKey="
         + NetworkConstants.shared.apiKey
         
-        // On récupère une URL
+        // Construction of the URL
         guard let url = URL(string: urlString) else {
-            // S'il y a un problème lorsque la récupération de l'URL, on retourne une erreur spécifique
-            return .failure(.urlError)
+            // If there is a problem, we return a specific error
+            completionHandler(Result.failure(.urlError))
+            return
         }
         
-        return await withCheckedContinuation { continuation in
-            URLSession.shared.dataTask(with: url) { dataResponse, urlResponse, error in
+        URLSession.shared.dataTask(with: url) { dataResponse, urlResponse, error in
             guard error == nil, let data = dataResponse else {
-                continuation.resume(with: .failure(NetworkError.canNotParseData))
                 return
             }
 
             do {
+                // We decode the result of the request and send a success return
                 let resultData = try JSONDecoder().decode(LatestNewsModel.self, from: data)
-                continuation.resume(with: .success(resultData))
+                completionHandler(.success(resultData))
             } catch {
+                // If we catch an error, we print it and return a specific error
                 print("error: ", error)
-                continuation.resume(with: .failure(NetworkError.canNotParseData))
+                completionHandler(.failure(.canNotParseData))
             }
         }.resume()
-        }
-        
         
     }
 }

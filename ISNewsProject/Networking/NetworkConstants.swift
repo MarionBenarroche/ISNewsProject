@@ -7,16 +7,15 @@
 
 import Foundation
 
+// Constant used for API call
 class NetworkConstants {
     public static var shared: NetworkConstants = NetworkConstants()
     
-    // Clef de l'API de https://newsapi.org/
-    // TODO Faut pas mettre dans le git lui + dire dans le readMe qu'il faut une clef pour que ça fonctionne
-    public var apiKey: String = "0442fa194d1f4f02b1894450a8607990"
+    // API key of https://newsapi.org/
+    // TODO An API key must be created and copied below
+    public var apiKey: String = ""
     
-    /*
-     * Getter de l'adresse utilisé pour l'API
-     */
+    // API URL without options
     public var serverAddress: String = "https://newsapi.org/v2/"
    
 }

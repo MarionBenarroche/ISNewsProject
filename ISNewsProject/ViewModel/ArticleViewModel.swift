@@ -13,15 +13,15 @@ class ArticleViewModel {
     var articleImage: String?
     var articleTitle: String
     var articleContent: String
+    var articleURL : String
     
     init(article: Article) {
         self.article = article
         
         self.articleTitle = article.title
-        self.articleContent = article.content ?? "" // TODO Voir si on a le contenu ou s'il faut aller le chercher
+        self.articleContent = article.description ?? ""
         self.articleImage = article.urlToImage ?? ""
-        
-        // TODO Ajouter l'URL vers le site
+        self.articleURL = article.url
     }
     
 }

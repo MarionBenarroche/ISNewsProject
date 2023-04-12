@@ -23,6 +23,7 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
         tableView.register(MainArticleCell.register(), forCellReuseIdentifier: MainArticleCell.identifier)
     }
     
+    // Reload the data of the view
     func reloadTableView() {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -34,7 +35,7 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numbreOfRows(in: section)
+        return viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -51,7 +52,7 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO Il faudrait ajouter un ID pour chaque article et ne pas passer par le titre de l'article
+        // TODO Add an ID the the Article struc and use it to find the correct Article instead of the title
         let articleTitle = cellDataSource[indexPath.row].title
         self.openArticle(articleTitle: articleTitle)
     }

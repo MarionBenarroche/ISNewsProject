@@ -13,6 +13,7 @@ class ArticleViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ContentLabel: UILabel!
+    @IBOutlet weak var seeMoreLink: UILabel!
     
     // View Model
     var viewModel: ArticleViewModel
@@ -32,10 +33,28 @@ class ArticleViewController: UIViewController {
         configView()
     }
 
+    // Configuration of the IBOutlets of the view with information of an Article
     func configView() {
         self.title = "Détail de l'article"
         titleLabel.text = viewModel.articleTitle
         ContentLabel.text = viewModel.articleContent
         imageView.load(url: viewModel.articleImage)
+        
+        // Enabled user interaction
+        seeMoreLink.isUserInteractionEnabled = true
+        
+        // Create and add the gesture recognizer
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelClicked(_:)))
+        seeMoreLink.addGestureRecognizer(gestureRecognizer)
+        
+        // Change text and color of label
+        seeMoreLink.text = "Voir l'article en intégralité"
+        seeMoreLink.textColor = .systemBlue
+    }
+    
+    @objc func labelClicked(_ sender: UITapGestureRecognizer) {
+        if let url = URL(string: viewModel.articleURL) {
+            UIApplication.shared.open(url)
+        }
     }
 }
